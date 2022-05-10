@@ -1,0 +1,45 @@
+Nama Kelompok :
+1.	Alfons Richardo 	/ C14190069
+2.	Dick Jovian		/ C14190076
+3.	Arnol Hadi Wijaya	/ C14190092
+
+//---------------------------------------------------------------------------------------------------------------------//
+
+#DML
+
+INSERT INTO pembeli
+VALUES ('Alfons Richardo','C14190069',62816969,'klepon','Darmo Baru Barat');
+INSERT INTO pembeli
+VALUES ('Dick Jovian','C14190076',62817676,'burung','Darmo Permai Utara');
+INSERT INTO pembeli
+VALUES ('Arnol Hadi','C14190092',62819292,'soobin','Darmo Permai Timur');
+
+INSERT INTO admin
+VALUES ('A1','Luis');
+INSERT INTO admin
+VALUES ('A2','Rudy');
+INSERT INTO admin
+VALUES ('A3','Vony');
+
+INSERT INTO obat
+VALUES ('OB001','Penisilin',100,25000,'Resep');
+INSERT INTO obat
+VALUES ('OB002','Batugin',200,30000,'Bebas');
+INSERT INTO obat
+VALUES ('OB003','Avigan',5,36000,'Resep');
+INSERT INTO obat
+VALUES ('OB004','Kalpanax',9,13000,'Bebas');
+
+INSERT INTO transaksi
+VALUES ('001','Diproses',100000,STR_TO_DATE("15-JAN-2020", "%d-%M-%Y"),'Virtual Account','C14190069',62816969,'A1');
+INSERT INTO transaksi
+VALUES ('002','Dikirim',150000,STR_TO_DATE("16-FEB-2020", "%d-%M-%Y"),'Cash','C14190076',62817676,'A2');
+INSERT INTO transaksi
+VALUES ('003','Diterima',36000,STR_TO_DATE("17-FEB-2020", "%d-%M-%Y"),'Virtual Account','C14190092',62819292,'A3');
+
+INSERT INTO pemesanan
+VALUES ('XYZ-001','OB001','001',4);
+INSERT INTO pemesanan
+VALUES ('XYZ-002','OB002','002',5);
+INSERT INTO pemesanan
+VALUES ('XYZ-003','OB003','003',1);

@@ -1,0 +1,54 @@
+Nama Kelompok :
+1.	Alfons Richardo 	/ C14190069
+2.	Dick Jovian		/ C14190076
+3.	Arnol Hadi Wijaya	/ C14190092
+
+//---------------------------------------------------------------------------------------------------------------------//
+
+#Query
+
+1. (Dick Jovian)
+SELECT id_obat,nama_obat,jenis_obat,stok,harga_satuan
+FROM obat
+WHERE id_obat NOT IN (SELECT id_obat
+                      FROM pemesanan)
+                      AND stok < 10
+2. (Dick Jovian)
+SELECT o.jenis_obat,o.id_obat,o.nama_obat,o.stok,o.harga_satuan
+FROM obat o JOIN pemesanan p
+ON (p.id_obat = o.id_obat)
+JOIN transaksi t
+ON(t.id_transaksi = p.id_transaksi)
+WHERE DATE_FORMAT(t.tanggal,'%b %Y %d') LIKE 'FEB 2020%' AND o.jenis_obat = 'Bebas'
+
+3. (Arnol Hadi Wijaya)
+SELECT tipe_transaksi,SUM(total_harga) AS 'Total Pembayaran'
+FROM transaksi
+WHERE DATE_FORMAT(tanggal,'%b %Y %d') LIKE 'FEB 2020%'                          
+GROUP BY tipe_transaksi
+
+4. (Arnol Hadi Wijaya)
+SELECT p.*
+FROM pembeli p JOIN transaksi t
+ON(p.id_user = t.id_user)
+WHERE (DATE_FORMAT(SYSDATE(),'%m')-DATE_FORMAT(t.tanggal,'%m') = 3 AND DATE_FORMAT(SYSDATE(),'%d')-DATE_FORMAT(t.tanggal,'%d') >= 0) 
+OR DATE_FORMAT(SYSDATE(),'%m')-DATE_FORMAT(t.tanggal,'%m') > 3
+
+5. (Alfons Richardo)
+SELECT t.*
+FROM pembeli p JOIN transaksi t
+ON(p.id_user = t.id_user)
+WHERE t.status = 'Diproses' 
+AND (DATE_FORMAT(SYSDATE(),'%d') - DATE_FORMAT(t.tanggal,'%d') > 2 
+     OR DATE_FORMAT(SYSDATE(),'%m') - DATE_FORMAT(t.tanggal,'%m') >= 1 
+     OR (last_day(t.tanggal) = DATE_FORMAT(t.tanggal,'%d') AND DATE_FORMAT(SYSDATE(),'%d') > 2)
+     OR (last_day(t.tanggal) - 1 = DATE_FORMAT(t.tanggal,'%d') AND DATE_FORMAT(SYSDATE(),'%d') > 1))
+
+6. (Alfons Richardo)
+SELECT p.id_obat,o.nama_obat,(SUM(p.jumlah_obat)) AS 'Total Penjualan'
+FROM obat o JOIN pemesanan p
+ON (p.id_obat = o.id_obat)
+GROUP BY p.id_obat
+HAVING (SUM(p.jumlah_obat)) >= ALL (SELECT (SUM(jumlah_obat))
+                                    FROM pemesanan
+                                    GROUP BY id_obat)

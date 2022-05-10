@@ -1,0 +1,47 @@
+Nama Kelompok :
+1.	Alfons Richardo 	/ C14190069
+2.	Dick Jovian		/ C14190076
+3.	Arnol Hadi Wijaya	/ C14190092
+
+//---------------------------------------------------------------------------------------------------------------------//
+
+#DDL
+
+CREATE TABLE pembeli(nama varchar(50),
+                     id_user varchar(50),
+                     no_hp int (50),
+                     pass varchar (50),
+                     address varchar (50),
+                     CONSTRAINT pembeli_pk PRIMARY KEY(id_user,no_hp)
+                     );
+CREATE TABLE admin(id_admin varchar(50),
+                   nama_admin varchar(50),
+                   CONSTRAINT admin_pk PRIMARY KEY(id_admin)
+                   );
+CREATE TABLE transaksi(id_transaksi varchar(50),
+                       status varchar(50),
+                       total_harga int(50),
+                       tanggal varchar(50), 
+                       tipe_transaksi varchar(50),
+                       id_user varchar(50),
+                       no_hp int(50),
+                       id_admin varchar (50),
+                       CONSTRAINT transaksi_pk PRIMARY KEY(id_transaksi),
+                       CONSTRAINT transaksi_fk1 FOREIGN KEY(id_user,no_hp) REFERENCES pembeli(id_user,no_hp),
+                       CONSTRAINT transaksi_fk2 FOREIGN KEY(id_admin) REFERENCES admin(id_admin)
+                       );
+CREATE TABLE obat(id_obat varchar(50),
+                  nama_obat varchar(50),
+                  stok int(50),
+                  harga_satuan int(50),
+                  jenis_obat varchar(50), 
+                  CONSTRAINT obat_pk PRIMARY KEY(id_obat)
+                  );
+CREATE TABLE pemesanan(id_pemesanan varchar(50),
+		       id_obat varchar(50),
+                       id_transaksi varchar(50),
+		       jumlah_obat int(50),
+                       CONSTRAINT pemesanan_pk PRIMARY KEY(id_pemesanan),
+		       CONSTRAINT pemesanan_fk1 FOREIGN KEY(id_obat) REFERENCES obat(id_obat),
+ 		       CONSTRAINT pemesanan_fk2 FOREIGN KEY(id_transaksi) REFERENCES transaksi(id_transaksi)
+                      );
